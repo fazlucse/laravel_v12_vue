@@ -18,8 +18,9 @@ Route::get('dashboard', function () {
     $people = \App\Models\Person::all();
     return Inertia::render('Dashboard',['people' =>$people]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-Route::get('/persons.index', [PersonController::class, 'index'])->name('persons.index');
+
 Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/persons.index', [PersonController::class, 'index'])->name('persons.index');
     Route::get('/persons/create', [PersonController::class, 'create'])->name('persons.create');
     Route::post('/persons', [PersonController::class, 'store'])->name('persons.store');
     Route::get('/persons/{person}', [PersonController::class, 'show'])->name('persons.show');
