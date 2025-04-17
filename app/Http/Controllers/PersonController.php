@@ -23,7 +23,7 @@ class PersonController extends Controller
     // Show the form for creating a new person
     public function create()
     {
-        return Inertia::render('Persons/Create');
+        return Inertia::render('persons/create');
     }
 
     // Store a newly created person

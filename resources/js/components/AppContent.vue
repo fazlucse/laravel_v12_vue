@@ -19,3 +19,8 @@ const className = computed(() => props.class);
         <slot />
     </main>
 </template>
+<style scoped>
+main{
+    margin-top: 0px !important;
+}
+</style>

@@ -27,17 +27,19 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import type { BreadcrumbItemType } from '@/types';
 import { ref } from 'vue';
 import { User, LogOut, Settings } from 'lucide-vue-next';
-
+import { Link ,router} from '@inertiajs/vue3';
 defineProps<{
     breadcrumbs?: BreadcrumbItemType[];
 }>();
-
+const logout = () => {
+    router.post(route('logout'));
+};
 const isUserMenuOpen = ref(false);
 </script>
 
 <template>
     <header
-        class="flex h-16 shrink-0 items-center justify-between gap-2 border-b border-sidebar-border/70 px-6 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4"
+        class="top-0  sticky z-50 flex h-16 shrink-0 items-center justify-between gap-2 border-b border-sidebar-border/70 bg-background/95  px-6  backdrop-blur transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 md:px-4"
     >
         <!-- Left side - Breadcrumbs and sidebar trigger -->
         <div class="flex items-center gap-2">
@@ -69,27 +71,31 @@ const isUserMenuOpen = ref(false);
                 class="absolute right-0 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-gray-800 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-50"
             >
                 <div class="py-1">
-                    <a
-                        href="#"
+<!--                    <a-->
+<!--                        href="#"-->
+<!--                        class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"-->
+<!--                    >-->
+<!--                        <User class="h-4 w-4 mr-2" />-->
+<!--                        Profile-->
+<!--                    </a>-->
+
+                    <Link
+                        :href="route('profile.edit')"
                         class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
-                    >
-                        <User class="h-4 w-4 mr-2" />
-                        Profile
-                    </a>
-                    <a
-                        href="#"
-                        class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                        @click="isUserMenuOpen = false"
                     >
                         <Settings class="h-4 w-4 mr-2" />
                         Settings
-                    </a>
+                    </Link>
                     <a
                         href="#"
+                        @click.prevent="logout"
                         class="flex items-center px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
                     >
                         <LogOut class="h-4 w-4 mr-2" />
                         Sign out
                     </a>
+
                 </div>
             </div>
         </div>

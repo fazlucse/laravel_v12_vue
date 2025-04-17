@@ -67,20 +67,23 @@ const changePerPage = (value) => {
 const getSerialNumber = (index) => {
     return props.persons.current_page * props.persons.per_page - props.persons.per_page + index + 1;
 };
-
+const breadcrumbs = ref([
+    { title: 'Home', href: '/' },
+    { title: 'Persons', href: '/persons.index' }
+])
 </script>
 
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
         <Head title="Persons" />
 
-        <div class="container mx-auto px-4 py-6">
+        <div class="container mx-auto px-4 py-2">
             <!-- Status Message -->
             <div v-if="$page.props.status" class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-4">
                 {{ $page.props.status }}
             </div>
 
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-2 gap-4">
                 <h1 class="text-2xl font-bold">Persons</h1>
 
                 <div class="flex flex-col sm:flex-row gap-4 w-full md:w-auto">
@@ -113,7 +116,7 @@ const getSerialNumber = (index) => {
             <!-- Person Table -->
             <div class="bg-white shadow-md rounded-lg overflow-hidden">
                 <div class="relative overflow-auto" :style="tableHeightStyle">
-                <table class="min-w-full">
+                <table class="min-w-full  ">
                         <thead class="bg-gray-100 sticky top-0 z-10">
                         <tr>
                             <th class="py-3 px-6 text-left bg-gray-100">S.L.</th>
@@ -150,7 +153,7 @@ const getSerialNumber = (index) => {
                 </div>
 
                 <!-- Pagination -->
-                <div class="flex flex-col md:flex-row justify-between items-center p-2 border-t">
+                <div style="bottom:0" class="flex flex-col md:flex-row justify-between items-center p-2 border-t">
                     <div class="mb-0 md:mb-0 text-sm text-gray-600">
                         Showing {{ persons.from }} to {{ persons.to }} of {{ persons.total }} entries
                     </div>
