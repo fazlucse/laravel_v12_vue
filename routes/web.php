@@ -5,14 +5,19 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    // Check if user is authenticated
-    if (auth()->check()) {
-        return redirect()->route('dashboard');
-    }
 
-    // Show welcome page for guests
-    return Inertia::render('Welcome');
-})->name('home')->middleware('auth');
+    return Inertia::render('landing/index');
+});
+
+//Route::get('/', function () {
+//    // Check if user is authenticated
+//    if (auth()->check()) {
+//        return redirect()->route('dashboard');
+//    }
+//
+//    // Show welcome page for guests
+//    return Inertia::render('Welcome');
+//})->name('home')->middleware('auth');
 
 Route::get('dashboard', function () {
     $people = \App\Models\Person::all();

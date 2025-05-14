@@ -1,16 +1,12 @@
 <template>
     <AppLayout :breadcrumbs="breadcrumbs">
-        <div class="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-            <div class="max-w-md mx-auto">
-                <div class="bg-white py-8 px-6 shadow rounded-lg sm:px-10">
+        <div class="bg-gray-50 py-5 px-0 sm:px-5 lg:px-5">
+            <div class="w-full mx-auto">
+                <div class="min-h-[82vh] bg-white py-0 px-0 sm:px-5">
                     <div class="text-center mb-8">
                         <h2 class="text-3xl font-extrabold text-gray-900">Add New Contact</h2>
-                        <p class="mt-2 text-sm text-gray-600">
-                            Fill in the details below to add a new contact
-                        </p>
                     </div>
-
-                    <form @submit.prevent="handleSubmit" class="space-y-6">
+                    <form @submit.prevent="handleSubmit" class="w-full mx-auto md:w-1/2 lg:px-5 sm:px-5 space-y-6">
                         <!-- Name Field -->
                         <div>
                             <label for="name" class="block text-sm font-medium text-gray-700">
@@ -75,12 +71,11 @@
                                     v-model="form.category"
                                     @blur="validateField('category')"
                                     :class="[
-                    'mt-1 block w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-2 focus:border-transparent sm:text-sm rounded-md',
-                    errors.category
-                      ? 'border-red-500 focus:ring-red-500'
-                      : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
-                  ]"
+                                        'mt-1 block w-full pl-3 pr-10 py-2 text-base border focus:outline-none focus:ring-2 focus:border-transparent sm:text-sm rounded-md',
+                                        errors.category ? 'border-red-500 focus:ring-red-500' : 'border-gray-300 focus:ring-indigo-500 focus:border-indigo-500'
+                                    ]"
                                 >
+                                    <option value="">Select Category</option>
                                     <option value="Work">Work</option>
                                     <option value="Friends">Friends</option>
                                     <option value="Others">Others</option>
@@ -100,14 +95,6 @@
                             >
                                 Save Contact
                             </Button>
-                            <Button
-                                type="button"
-                                class="flex-1 justify-center"
-                                variant="secondary"
-                                @click="handleCancel"
-                            >
-                                Cancel
-                            </Button>
                         </div>
                     </form>
                 </div>
@@ -122,17 +109,19 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import InputError from '@/components/InputError.vue';
+import { router, useForm } from '@inertiajs/vue3';
 
 const breadcrumbs = ref([
     { title: 'Home', href: '/' },
     { title: 'Persons', href: '/persons.index' },
     { title: 'Add New Person', href: '/contacts/create' }
-])
-const form = ref({
+]);
+
+const form = useForm({
     name: '',
     email: '',
     phone: '',
-    category: 'Work'
+    category: 'Work',
 });
 
 const errors = ref({
@@ -144,29 +133,29 @@ const errors = ref({
 
 const isSubmitting = ref(false);
 
-const validateField = (field) => {
+const validateField = (field: string) => {
     switch (field) {
         case 'name':
-            errors.value.name = form.value.name.trim() === '' ? 'Name is required' : '';
+            errors.value.name = form.name.trim() === '' ? 'Name is required' : '';
             break;
         case 'email':
-            if (form.value.email.trim() === '') {
+            if (form.email.trim() === '') {
                 errors.value.email = 'Email is required';
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.value.email)) {
+            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
                 errors.value.email = 'Please enter a valid email address';
             } else {
                 errors.value.email = '';
             }
             break;
         case 'phone':
-            if (form.value.phone && !/^[\d\s\-()+]*$/.test(form.value.phone)) {
+            if (form.phone && !/^[\d\s\-()+]*$/.test(form.phone)) {
                 errors.value.phone = 'Please enter a valid phone number';
             } else {
                 errors.value.phone = '';
             }
             break;
         case 'category':
-            errors.value.category = form.value.category === '' ? 'Category is required' : '';
+            errors.value.category = form.category === '' ? 'Category is required' : '';
             break;
     }
 };
@@ -179,22 +168,24 @@ const validateForm = () => {
 };
 
 const handleSubmit = async () => {
-    if (!validateForm()) {
-        return;
-    }
+    if (!validateForm()) return;
 
     isSubmitting.value = true;
 
     try {
-        console.log('Form submitted:', form.value);
-        await new Promise(resolve => setTimeout(resolve, 1000));
-
-        // Reset form
-        form.value = { name: '', email: '', phone: '', category: 'Work' };
-        errors.value = { name: '', email: '', phone: '', category: '' };
-
-        // Show success (in a real app, use a toast notification)
-        alert('Contact saved successfully!');
+        form.post(route('persons.store'), {
+            preserveScroll: true,
+            onSuccess: () => {
+                form.reset();
+                alert('Contact saved successfully!');
+            },
+            onError: () => {
+                // Inertia will populate form.errors automatically
+            },
+            onFinish: () => {
+                isSubmitting.value = false;
+            }
+        });
     } catch (error) {
         console.error('Error:', error);
         alert('An error occurred. Please try again.');
@@ -202,11 +193,23 @@ const handleSubmit = async () => {
         isSubmitting.value = false;
     }
 };
+
 const handleCancel = () => {
-    // Optionally reset form fields and errors
-    form.value = { name: '', email: '', phone: '', category: 'Work' };
+    form.reset();
     errors.value = { name: '', email: '', phone: '', category: '' };
-    // Navigate back to the contacts list without reloading data
     router.push({ name: 'PersonsIndex' });
 };
 </script>
+
+<style scoped>
+/* Prevent full page scroll */
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+.min-h-screen {
+    height: 100vh;
+    overflow: hidden;
+}
+</style>
