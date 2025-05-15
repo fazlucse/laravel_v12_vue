@@ -6,19 +6,20 @@
             <div class="md:flex md:space-x-8">
                 <div class="md:w-1/2 mb-8 md:mb-0">
                     <h3 class="text-2xl font-semibold text-gray-700 mb-4">Contact Information</h3>
-                    <p class="text-gray-600 mb-6">Feel free to reach out if you're looking for a developer, have a question, or just want to connect.</p>
+                    <p class="text-gray-600 mb-6">Feel free to reach out if you're looking for a developer, have a
+                        question, or just want to connect.</p>
                     <div class="space-y-4">
                         <div class="flex items-center">
                             <i class="fas fa-envelope text-green-500 mr-4 text-xl"></i>
-                            <span class="text-gray-600">john.doe@example.com</span>
+                            <span class="text-gray-600">{{ email }}</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-phone text-green-500 mr-4 text-xl"></i>
-                            <span class="text-gray-600">+1 (555) 123-4567</span>
+                            <span class="text-gray-600">{{ phone }}</span>
                         </div>
                         <div class="flex items-center">
                             <i class="fas fa-map-marker-alt text-green-500 mr-4 text-xl"></i>
-                            <span class="text-gray-600">San Francisco, CA</span>
+                            <span class="text-gray-600">{{ location }}</span>
                         </div>
                     </div>
                 </div>
@@ -26,17 +27,23 @@
                     <form class="space-y-4">
                         <div>
                             <label for="name" class="block text-gray-700 mb-2">Name</label>
-                            <input type="text" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <input type="text" id="name"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                         </div>
                         <div>
                             <label for="email" class="block text-gray-700 mb-2">Email</label>
-                            <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
+                            <input type="email" id="email"
+                                   class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500">
                         </div>
                         <div>
                             <label for="message" class="block text-gray-700 mb-2">Message</label>
-                            <textarea id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
+                            <textarea id="message" rows="4"
+                                      class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
                         </div>
-                        <button type="submit" class="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300 w-full">Send Message</button>
+                        <button type="submit"
+                                class="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition duration-300 w-full">
+                            Send Message
+                        </button>
                     </form>
                 </div>
             </div>
@@ -44,8 +51,23 @@
     </section>
 </template>
 
-<script>
-export default {
+<script setup>
+
+defineOptions({
     name: 'ContactSection'
-}
+});
+defineProps({
+    email: {
+        type: String,
+        default: "fazlu.pust.cse@gmail.com",
+    },
+    phone: {
+        type: String,
+        default: "+880 1744309649",
+    },
+    location: {
+        type: String,
+        default: "Dhaka, Bangladesh",
+    }
+});
 </script>

@@ -12,7 +12,7 @@ const scrollTo = (section) => {
     const element = document.getElementById(section);
     if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
-        
+
     }
     showMobileMenu.value = false;
     activeSection.value = section;
@@ -36,7 +36,10 @@ onMounted(() => {
 
     sections.forEach((id) => {
         const el = document.getElementById(id);
-        if (el) observer.observe(el);
+        if (el) {
+            observer.observe(el);
+        }
+
     });
 });
 </script>

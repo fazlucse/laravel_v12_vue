@@ -10,15 +10,15 @@
                     <a href="#" class="text-gray-400 hover:text-white">
                         <i class="fab fa-github text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white">
+                    <a href="https://www.linkedin.com/in/fazluniloy" target="_blank" class="text-gray-400 hover:text-white">
                         <i class="fab fa-linkedin text-xl"></i>
                     </a>
-                    <a href="#" class="text-gray-400 hover:text-white">
-                        <i class="fab fa-twitter text-xl"></i>
-                    </a>
-                    <a href="#" class="text-gray-400 hover:text-white">
-                        <i class="fab fa-instagram text-xl"></i>
-                    </a>
+<!--                    <a href="#" class="text-gray-400 hover:text-white">-->
+<!--                        <i class="fab fa-twitter text-xl"></i>-->
+<!--                    </a>-->
+<!--                    <a href="#" class="text-gray-400 hover:text-white">-->
+<!--                        <i class="fab fa-instagram text-xl"></i>-->
+<!--                    </a>-->
                 </div>
             </div>
         </div>
