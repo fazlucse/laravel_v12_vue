@@ -11,7 +11,7 @@
                     class="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition duration-300"
                 >
                     <img
-                        :src="project.image"
+                        :src="project.images[0]"
                         :alt="project.title"
                         class="w-full h-48 object-cover"
                     >
@@ -27,20 +27,33 @@
                 {{ tag }}
               </span>
                         </div>
-                        <a
-                            :href="project.link"
-                            class="text-green-500 font-semibold hover:text-green-700"
-                        >
+                        <a  @click="openProject(project)"
+                           class="text-green-500 font-semibold hover:text-green-700 cursor-pointer">
                             View Project →
                         </a>
                     </div>
                 </div>
             </div>
+            <ProjectModal
+                v-if="showDetails"
+                :project="selectedProject"
+                @close="showDetails = false"
+            />
         </div>
     </section>
 </template>
 
 <script setup>
+import ProjectModal from './ProjectModal.vue'
+import { ref } from 'vue'
+const showDetails = ref(false)
+const selectedProject = ref(null)
+
+function openProject(project) {
+    selectedProject.value = project
+    showDetails.value = true
+}
+
 defineProps({
     projects: {
         type: Array,
@@ -49,25 +62,62 @@ defineProps({
             {
                 title: "Buying House ERP",
                 description: "Buying House ERP streamlines buying house operations with efficient management of procurement, inventory, accounts, and payroll. ",
-                image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                images: ["https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80"],
                 tags: ["PHP", "JavaScript", "jQuery","CSS","MySQL"],
                 link: "#"
             },
             {
-                title: "Task Management App",
-                description: "A productivity app for managing tasks with drag-and-drop functionality.",
-                image: "https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1169&q=80",
-                tags: ["Vue.js", "Firebase", "Tailwind"],
+                title: "Point of Sale (POS) System",
+                description: "Retail POS System - A comprehensive solution for managing inventory, sales transactions, payments, and invoice generation for retail businesses.",
+                images: ["https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1169&q=80"],
+                tags: ["Laravel/PHP", "JavaScript","jQuery","CSS","HTML", "MySQL"],
                 link: "#"
             },
             {
-                title: "Portfolio Template",
-                description: "A customizable portfolio template for creatives and developers.",
-                image: "https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1136&q=80",
-                tags: ["HTML", "CSS", "JavaScript"],
+                title: "Accounting Software",
+                description: "Developed a comprehensive accounting software solution to manage financial transactions, handle payables and receivables, generate invoices, track payments, and produce detailed financial reports tailored for small businesses and individual users.",
+                images: ["https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1136&q=80"],
+                tags: ["Laravel/PHP","MySQL","Vue","HTML", "CSS"],
+                link: "#"
+            },
+            {
+                title: "E-commerce Platforms",
+                description: "Comprehensive online store solution with multi-vendor support, advanced analytics, and integrated payment processing.",
+                images: ["https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1136&q=80"],
+                tags: ["Laravel/PHP","MySQL","JavaScript","jQuery","HTML", "CSS"],
+                link: "#"
+            },
+            {
+                title: "Bhutan Waste Bank (BWB App)",
+                description: "A mobile application developed to support waste management efforts in Bhutan. The app enables\n" +
+                    "users to register, complete OTP verification, submit trash, track the value of their waste in real-\n" +
+                    "time, track driver locations, and redeem collection activities efficiently. Built with Flutter for the\n" +
+                    "frontend and Laravel for backend API services.",
+                images: [
+                    "https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1136&q=80",
+                    "https://images.unsplash.com/photo-1559028012-481c04fa702d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1136&q=80",
+                ],
+                tags: ["Flutter (Mobile)"," Laravel (API)","MySQL (Database)"],
+                link: "#"
+            },
+            {
+                title: "Buying House Quality Inspection App",
+                description: "A mobile application designed for garment quality inspectors to record inspection data directly\n" +
+                    "from factories. Features include offline data synchronization, defect capturing, and automated\n" +
+                    "report generation. Developed with a focus on field usability and reliability.",
+                images: [
+                    `${import.meta.env.VITE_APP_DI_URL}images/projects/s1.jpg`,
+                    `${import.meta.env.VITE_APP_DI_URL}images/projects/s2.jpg`,
+                    `${import.meta.env.VITE_APP_DI_URL}images/projects/s3.jpg`,
+                    `${import.meta.env.VITE_APP_DI_URL}images/projects/s4.jpg`,
+                    `${import.meta.env.VITE_APP_DI_URL}images/projects/s5.jpg`,
+                ],
+                tags: ["Flutter & Ionic (Mobile)"," Laravel (API)","MySQL (Database)"],
                 link: "#"
             }
         ]
-    }
+    },
+    project: Object
 });
+
 </script>
