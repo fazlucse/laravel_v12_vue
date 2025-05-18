@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\PersonController;
+use App\Http\Controllers\PortfolioController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
 
-    return Inertia::render('landing/index');
-});
+Route::get('/', [PortfolioController::class, 'index'])->name('portfolio.index');
 
 //Route::get('/', function () {
 //    // Check if user is authenticated

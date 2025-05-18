@@ -4,6 +4,9 @@ import HomeSection from './home.vue';
 import AboutSection from './about.vue';
 import ProjectSection from './project.vue';
 import ContactSection from './contact.vue';
+defineProps({
+    totalVisits: Number
+})
 </script>
 
 <template>

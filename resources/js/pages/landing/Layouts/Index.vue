@@ -10,11 +10,52 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
+import axios from 'axios';
 import Navbar from './../Navbar.vue';
 import Footer from './../Footer.vue';
 import BackToTop from './../BackToTop.vue';
 // Back to Top Button
 
+// function getUserIP() {
+//     // Use a free IP API or get IP from backend if possible
+//     return fetch('http://127.0.0.1:8000/?format=json')
+//         .then(res => res.json())
+//         .then(data => data.ip)
+//         .catch(() => null);
+// }
+//
+// function getLocation() {
+//     // Use a geo-location API (you can use free services like ipapi.co or ipgeolocation.io)
+//     return fetch('https://ipapi.co/json/')
+//         .then(res => res.json())
+//         .catch(() => ({}));
+// }
+
+onMounted(async () => {
+    try {
+        // const ip = await getUserIP();
+        // const location = await getLocation();
+            console.log("sdfss ");
+        const data = {
+            ip: '127.0.0.1',
+            route: window.location.pathname,
+            user_agent: navigator.userAgent,
+            country: 'Country',
+            region: 'Region',
+            city: 'City',
+            postal_code: '12345',
+            latitude: 12.345678,
+            longitude: 98.7654321,
+        };
+
+        await axios.post('/api/visitor', data);
+
+        console.log('Page visit sent:', data);
+    } catch (error) {
+        console.error('Failed to send page visit', error);
+    }
+});
 </script>
 <style>
 .back-to-top {
