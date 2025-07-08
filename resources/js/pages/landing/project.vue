@@ -147,8 +147,7 @@ defineProps({
                             "Payment Vouchers",
                             "Journal Entries",
                             "Trial Balance & Financial Statements"
-                        ],
-
+                        ]
                     },
                     {
                         title: "CRM (Customer Relationship Management)",
